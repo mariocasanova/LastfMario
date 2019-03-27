@@ -1,0 +1,166 @@
+body {
+
+/* Ubicación de la imagen */
+
+background-image: url(imatges/fons.jpg);
+
+/* Para dejar la imagen de fondo centrada, vertical y
+
+horizontalmente */
+
+background-position: center center;
+
+/* Para que la imagen de fondo no se repita */
+
+background-repeat: no-repeat;
+
+/* La imagen se fija en la ventana de visualización para que la altura de la imagen no supere a la del contenido */
+
+background-attachment: fixed;
+
+/* La imagen de fondo se reescala automáticamente con el cambio del ancho de ventana del navegador */
+
+background-size: cover;
+
+/* Se muestra un color de fondo mientras se está cargando la imagen
+
+de fondo o si hay problemas para cargarla */
+
+background-color: #66999;
+
+}
+
+.btn {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.container .btn {
+  position: center;
+  background-color: #f1f1f1;
+  color: black;
+  font-size: 16px;
+  padding: 16px 100px;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  opacity: 0.6;
+  text-align: center;
+}
+
+.container .btn:hover {
+  background-color: black;
+  color: white;
+}
+
+.btn1 {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;
+  border-radius: 4px;
+}
+
+.btn1:hover {
+  background-color: #16af23;
+  color: black;
+}
+
+.btn2 {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  background-color: white;
+  color: black;
+  border: 2px solid #008CBA;
+  border-radius: 4px;
+}
+
+.btn2:hover {
+  background-color: #4286f4; /* Green */
+  color: black;
+}
+
+.btn3 {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  background-color: white;
+  color: black;
+  border: 2px solid #e22f12;
+  border-radius: 4px;
+}
+
+.btn3:hover {
+  background-color: #ef482d; /* Green */
+  color: black;
+}
+
+.btn4 {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  background-color: white;
+  color: black;
+  border: 2px solid #d66e00;
+  border-radius: 4px;
+}
+
+.btn4:hover {
+  background-color: #ff9523; /* Green */
+  color: black;
+}
+
+.btn5 {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  background-color: white;
+  color: black;
+  border: 2px solid #dbcc29;
+  border-radius: 4px;
+}
+
+.btn5:hover {
+  background-color: #f2e01a; /* Green */
+  color: black;
+}
+
+.btn6 {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  background-color: white;
+  color: black;
+  border: 2px solid #a3009d;
+  border-radius: 4px;
+}
+
+.btn6:hover {
+  background-color: #db29d5; /* Green */
+  color: black;
+}
+
+.btn7 {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  background-color: white;
+  color: black;
+  border: 2px solid #1ae097;
+  border-radius: 4px;
+}
+
+.btn7:hover {
+  background-color: #008252; /* Green */
+  color: black;
+}
+
+.btn8 {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  background-color: white;
+  color: black;
+  border: 2px solid #1ae097;
+  border-radius: 4px;
+}
+
+.btn8:hover {
+  background-color: #008252; /* Green */
+  color: black;
+}

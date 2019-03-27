@@ -3,15 +3,17 @@
 	<head>
 		<title>Mi primer Last fm</title>
 		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script type="text/javascript" src="./js/md5.min.js"></script>
 		 <script type="text/javascript" src="./js/constants.js"></script>
-
+		 <link href="boots/css/bootstrap.min.css" rel="stylesheet" media="screen">
+     <link href="estils.css" rel="stylesheet">
 	</head>
 	<body>
-		<h1>The onclick Event</h1>
-		<p>The onclick event is used to trigger a function when an element is clicked on.</p>
-		<p>Click the button to trigger a function that will output "Hello World" in a p element with id="demo".</p>
-		<button onclick="myLoginFunction()">Click me</button>
+		<div class="container">
+		<button class="btn btn-primary" onclick="myLoginFunction()">Prem el botó per fer el login!</button>
+	</div>
 	</body>
 </html>
