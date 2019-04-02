@@ -15,9 +15,7 @@ token (Required) : A 32-character ASCII hexadecimal MD5 hash returned by step 1 
                   permissions to the application by the user)
 api_key (Required) : A Last.fm API key.
 api_sig (Required) : A Last.fm method signature. See authentication for more information
-
 Api_sig requereix uns quants canvis ( calculs complicats que he anant fent)...
-
 Result JSON expected:
 exit ->
 {
@@ -64,7 +62,7 @@ function calculateApiSignatureStack()
         /*
         .*/
             console.log("Post data: Last token " + post_data.token + "\nApiKey: "+ post_data.api_key + "\nApiSig: " + post_data.api_sig);
-            sessionStorage.setItem("myApiSig",post_data.api_sig );
+            sessionStorage.setItem("\nmyApiSig",post_data.api_sig );
 
             var last_url="http://ws.audioscrobbler.com/2.0/?";
             $.ajax({
@@ -75,7 +73,7 @@ function calculateApiSignatureStack()
                      captured+
                      '&api_key=d30c30f2e4eddeb7eac9ca3f90272243' +
                      '&api_sig='+
-                     post_data.api_sig+
+                      post_data.api_sig+
                      '&format=json',
               //data: post_data,
               dataType: 'json',
@@ -135,7 +133,6 @@ Params:
 user (Optional) : The user to fetch info for. Defaults to the authenticated user.
                   NOTE NOW IS REQUIRED, WITHOUT THIS IT DOESNT WORK
 api_key (Required) : A Last.fm API key.
-
 Result JSon :
 {
   "user": {
@@ -199,7 +196,6 @@ Params:
 user (Optional) : The user to fetch info for. Defaults to the authenticated user.
                   NOTE NOW IS REQUIRED, WITHOUT THIS IT DOESNT WORK
 api_key (Required) : A Last.fm API key.
-
 Result XML :
 <user>
     <id>1000002</id>
@@ -218,48 +214,44 @@ Result XML :
 </user>
 */
 function loadUserInfoXMLDoc() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          processarResposta(this);
-        }
-      };
-      xhttp.open("GET", "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=supermariano1&api_key=d30c30f2e4eddeb7eac9ca3f90272243", true);
-      xhttp.send();
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myFunction(this);
     }
-    function processarResposta(xml) {
-      var i;
-      var xmlDoc = xml.responseXML;
-      var table="<tr><th>Data</th><th>Value</th><th>Altre</th></tr>";
-      var x = xmlDoc.getElementsByTagName("user");
-      for (i = 0; i <x.length; i++) {
-        table += "<tr><td>" +
-        x[i].getElementsByTagName("name")[0].childNodes[0].nodeValue +
-        "</td><td>" +
-        x[i].getElementsByTagName("playcount")[0].childNodes[0].nodeValue +
-        "</td><td><img src="+
-        x[i].getElementsByTagName("image")[2].childNodes[0].nodeValue +
-       "></img></td></tr>";
-       console.log(x[i]);
-      }
-      document.getElementById("demo").innerHTML = table;
+  };
+  xhttp.open("GET", "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=supermariano1&api_key=d30c30f2e4eddeb7eac9ca3f90272243", true);
+  xhttp.send();
+}
+function myFunction(xml) {
+  var i;
+  var xmlDoc = xml.responseXML;
+  var table="<tr><th>Data</th><th>Value</th><th>Altre</th></tr>";
+  var x = xmlDoc.getElementsByTagName("user");
+  for (i = 0; i <x.length; i++) {
+    table += "<tr><td>" +
+    x[i].getElementsByTagName("name")[0].childNodes[0].nodeValue +
+    "</td><td>" +
+    x[i].getElementsByTagName("playcount")[0].childNodes[0].nodeValue +
+    "</td><td><img src="+
+    x[i].getElementsByTagName("image")[2].childNodes[0].nodeValue +
+   "></img></td></tr>";
+   console.log(x[i]);
+  }
+  document.getElementById("demo").innerHTML = table;
 }
 /*
-
 Metode: https://www.last.fm/api/show/chart.getTopArtists
 Objective: Get the top artists chart
 Params:
 page (Optional) : The page number to fetch. Defaults to first page.
 limit (Optional) : The number of results to fetch per page. Defaults to 50.
 api_key (Required) : A Last.fm API key.:
-
 Params
 page (Optional) : The page number to fetch. Defaults to first page.
 limit (Optional) : The number of results to fetch per page. Defaults to 50.
 api_key (Required) : A Last.fm API key.
-
 Exmaple response in json:
-
 {
   "artists": {
     "artist": [
@@ -428,21 +420,16 @@ function loadChartTopArtistsJSONDoc()
 
 /*
 The only illegal characters are &, < and > (as well as " or ' in attributes).
-
 They're escaped using XML entities, in this case you want &amp; for &.
-
 Metode: https://www.last.fm/api/show/artist.search
 Objective: Search for an artist by name. Returns artist matches sorted by relevance.
-
 Params
 limit (Optional) : The number of results to fetch per page. Defaults to 30.
 page (Optional) : The page number to fetch. Defaults to first page.
 artist (Required) : The artist name
 api_key (Required) : A Last.fm API key.
-
 Exemple use params optional: http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=b6720a4ef50c0a1f63419e334fbf9c74&format=json&limit=10&page=2
 Agafa dos pagines de 10 entrades cadascuna, un total de 20 ( 0...19)
-
 Exmaple response in XML:
 <results for="cher" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">
   <opensearch:Query role="request" searchTerms="cher" startPage="1"/>
@@ -461,11 +448,9 @@ Exmaple response in XML:
 	...
   </artistmatches>
 </results>
-
 NOTE SEEMS ONLY WORKS IN JSON FORMAT:
 http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=b6720a4ef50c0a1f63419e334fbf9c74&format=json
 THIS DOESNT WORK...http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=b6720a4ef50c0a1f63419e334fbf9c74
-
 {
   "results": {
     "opensearch:Query": {
@@ -833,12 +818,9 @@ function myFunction(xml) {
 
 /*
 The only illegal characters are &, < and > (as well as " or ' in attributes).
-
 They're escaped using XML entities, in this case you want &amp; for &.
-
 Metode: https://www.last.fm/api/show/track.addTags
 Objective:  Tag an album using a list of user supplied tags.
-
 Params
 artist (Required) : The artist name
 track (Required) : The track name
@@ -846,29 +828,77 @@ tags (Required) : A comma delimited list of user supplied tags to apply to this 
 api_key (Required) : A Last.fm API key.
 api_sig (Required) : A Last.fm method signature. See authentication for more information.
 sk (Required) : A session key generated by authenticating a user via the authentication protocol.
-
 Auth
 This service requires authentication. Please see our authentication how-to.
 This is a write service and must be accessed with an HTTP POST request.
 All parameters should be sent in the POST body, including the 'method' parameter. See rest requests for more information.
-
 Sample Response
 <lfm status="ok">
 </lfm>
-
 Error in json:
 {
   "error": 10,
   "message": "Invalid API key - You must be granted a valid key by last.fm"
 }
-
 Error in xml
 <lfm status="failed">
     <error code="10">Invalid API key - You must be granted a valid key by last.fm</error>
 </lfm>
 */
 
-function addTrackTag()
+function processarRespostaAddTagXmlHttpRequest(xml) {
+  var i;
+  var xmlDoc = xml.responseXML;
+  var x = xmlDoc.getElementsByTagName("lfm");
+  txt = x.getAttribute("status");
+  if( txt == "ok")
+  {
+    document.getElementById("demo2").innerHTML = "<h2>Added Tag Correct</h2>";
+  }
+  else document.getElementById("demo2").innerHTML = "<h2>Failure</h2>";
+}
+
+function processarRespostaAddTagJquery(xml) {
+
+  txt = $(xml).find('lfm').attr('status');
+  if( txt == "ok")
+  {
+    document.getElementById("demo2").innerHTML = "<h2>Added Tag Correct</h2>";
+  }
+  else document.getElementById("demo2").innerHTML = "<h2>Failure</h2>";
+}
+
+function calculate_apisig(params){
+
+  //Crec que només necessitem apikey, token i secret i no necessitem params, els podem treure de sessionStorage
+  //Calcula l'apiSig a partir dels valors d'abans...
+    ss = "";
+    st = [];
+    so = {};
+    so['api_key'] = params['api_key'];
+    so['token'] = params['token'];
+    Object.keys(params).forEach(function(key){
+        st.push(key); // Get list of object keys
+    });
+    st.sort(); // Alphabetise it
+    st.forEach(function(std){
+        ss = ss + std + params[std]; // build string
+    });
+    ss += myshared_secret;
+        // console.log(ss + last_fm_data['secret']);
+        //Segons documentacio : https://www.last.fm/api/webauth
+        //api signature = md5("api_keyxxxxxxxxmethodauth.getSessiontokenxxxxxxxmysecret")
+        //OBJECTIU NOSTRE SERA ACONSEGUIR UNA LINEA COM AQUESTA
+        // api_keyAPIKEY1323454formatjsonmethodauth.getSessiontokenTOKEN876234876SECRET348264386
+    //hashed_sec = $.md5(unescape(encodeURIComponent(ss)));
+    var hashed_sec = md5(unescape(encodeURIComponent(ss))); // "2063c1608d6e0baf80249c42e2be5804"
+    console.log("La apiSig es: " + hashed_sec);
+    so['api_sig'] = hashed_sec; // Correct when calculated elsewhere.
+    return so; // Returns signed POSTable object
+}
+
+
+function addTrackTagJquery()
 {
   if (sessionStorage.getItem("mySessionKey") == null)
   {
@@ -884,96 +914,116 @@ function addTrackTag()
           artist : "Muse",
           track : "Take a Bow",
           //A comma delimited list of user supplied tags to apply to this track. Accepts a maximum of 10 tags.
-          tags : [tag1, tag2],
+        //  tags : [tag1,tag2],
+        //Tags as other parameters should be utf8-encoded two or more parameters seems doesnt work
+          tags : "criminal4",
           api_key : myAPI_key,
-          api_sig : sessionStorage.getItem("myApiSig"),
-          sk : sessionStorage.getItem("mySessionKey"),
-          format:"json"
+          token : captured,
+          sk : sessionStorage.getItem("mySessionKey")
           };
-        /*
-        httpRequest.open("POST", url,true);
-        httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        var params=concertirEnParametres(dades);
-        httpRequest.send(params);
-        */
-        var last_url="http://ws.audioscrobbler.com/2.0/";
-        var xhr = new XMLHttpRequest();
 
-        xhr.open("POST", last_url, true);
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-              processarRespostaAddTag(xhr);
-            }
-        }
-        var data = JSON.stringify(dades);
-        xhr.send(data);
-        /*
+        var last_url="http://ws.audioscrobbler.com/2.0/";
+
+        var myapisigtag = calculate_apisig(dades);
+        console.log("La apiSig de Add TAg es: " + myapisigtag['api_sig']);
+        //Hauria de poder esborrar token perque no ho necessita en teoria pero si no no funciona
+        //delete dades["token"];
+        dades['api_sig']= myapisigtag['api_sig'];
+
             $.ajax({
               type: "POST", //both are same, in new version of jQuery type renamed to method
               url: last_url,
-              data: JSON.stringify(dades),
-              dataType: 'xml', //datatype especifica el tipus de dada que s'espera rebre del servidor
+              data: dades,
+              dataType: "xml", //datatype especifica el tipus de dada que s'espera rebre del servidor
               success: function(res){
-                  processarRespostaAddTag(res);
+                  processarRespostaAddTagJquery(res);
               },
               error : function(){
                   console.log("Error en addTag to track" + dades.track + "de l'artista" + dades.artist);
                   document.getElementById("demo2").innerHTML = "<h2>Failure</h2>";
               }
              });
-*/
-             function processarRespostaAddTag(xml) {
-               var i;
-               var xmlDoc = xml.responseXML;
-               x = xmlDoc.getElementsByTagName('lfm');
-               txt = x.getAttribute("status");
-               if( txt == "ok")
-               {
-                 document.getElementById("demo2").innerHTML = "<h2>Added Tag Correct</h2>";
-               }
-               else document.getElementById("demo2").innerHTML = "<h2>Failure</h2>";
-             }
-        }
+
+
     }
+}
+
+function addTrackTagXMLHttpRequest()
+{
+  if (sessionStorage.getItem("mySessionKey") == null)
+  {
+    console.log("Error no estas authenticat");
+  }
+  else {
+    //Estas loguejat i autenticat de forma correcta--
+          var tag1="Relax";
+          var tag2="Intense";
+        //O be aixi i despres utilitzem una funcio per convertir-lo en string ( convertirenParametresDades del ioc)
+        var dades = {
+          method: "track.addTags",
+          artist : "Muse",
+          track : "Take a Bow",
+          //A comma delimited list of user supplied tags to apply to this track. Accepts a maximum of 10 tags.
+        //  tags : [tag1,tag2],
+        //Tags as other parameters should be utf8-encoded two or more parameters seems doesnt work
+          tags : "criminal4",
+          api_key : myAPI_key,
+          token : captured,
+          sk : sessionStorage.getItem("mySessionKey")
+          };
+
+        var last_url="http://ws.audioscrobbler.com/2.0/";
+
+        var myapisigtag = calculate_apisig(dades);
+        console.log("La apiSig de Add TAg es: " + myapisigtag['api_sig']);
+        //delete dades["token"];
+        dades['api_sig']= myapisigtag['api_sig'];
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("POST", last_url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              processarRespostaAddTagXmlHttpRequest(xhr);
+            }
+        }
+        var data = JSON.stringify(dades);
+        xhr.send(data);
+
+    }
+}
 
     /*
     The only illegal characters are &, < and > (as well as " or ' in attributes).
-
     They're escaped using XML entities, in this case you want &amp; for &.
-
     Metode: https://www.last.fm/api/show/track.love
     Objective:  Love a track for a user profile.
-
     Params
     track (Required) : A track name (utf8 encoded)
     artist (Required) : An artist name (utf8 encoded)
     api_key (Required) : A Last.fm API key.
     api_sig (Required) : A Last.fm method signature. See authentication for more information.
     sk (Required) : A session key generated by authenticating a user via the authentication protocol.
-
     Auth
     This service requires authentication. Please see our authentication how-to.
     This is a write service and must be accessed with an HTTP POST request.
     All parameters should be sent in the POST body, including the 'method' parameter. See rest requests for more information.
-
     Sample Response
     <lfm status="ok">
     </lfm>
-
     Error in json:
     {
       "error": 10,
       "message": "Invalid API key - You must be granted a valid key by last.fm"
     }
-
     Error in xml
     <lfm status="failed">
         <error code="10">Invalid API key - You must be granted a valid key by last.fm</error>
     </lfm>
     */
 
-    function trackLove()
+    function trackLoveXMlHttpRequestSendQuery()
     {
       if (sessionStorage.getItem("mySessionKey") == null)
       {
@@ -982,63 +1032,163 @@ function addTrackTag()
       else {
         //Estas loguejat i autenticat de forma correcta--
           //O be aixi i despres utilitzem una funcio per convertir-lo en string ( convertirenParametresDades del ioc)
-            var dades = {
-              method: "track.love",
-              artist : "Muse",
-              track : "Take a Bow",
-              api_key : myAPI_key,
-              api_sig : sessionStorage.getItem("myApiSig"),
-              sk : sessionStorage.getItem("mySessionKey"),
-              format:"json"
-              };
-            /*
-            httpRequest.open("POST", url,true);
-            httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            var params=concertirEnParametres(dades);
-            httpRequest.send(params);
-            */
-            var last_url="http://ws.audioscrobbler.com/2.0/";
-            var xhr = new XMLHttpRequest();
 
-            xhr.open("POST", last_url, true);
-            xhr.setRequestHeader("Content-type", "application/json");
+
+
+            var dadestl = {
+              method: 'track.Love',
+              artist : Utf8.encode('Muse'),
+              track : Utf8.encode('Take a Bow'),
+              api_key : myAPI_key,
+              token : captured,
+              sk : sessionStorage.getItem("mySessionKey")
+              };
+
+            var last_url="http://ws.audioscrobbler.com/2.0/";
+            var myapisiglove = calculate_apisig(dadestl);
+            console.log("La apiSig de Track love es: " + myapisiglove['api_sig']);
+            //delete dadestl["token"];
+            dadestl['api_sig']= myapisiglove['api_sig'];
+           var xhr = new XMLHttpRequest();
+
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                  processarRespostaLoveTrack(xhr);
+                  processarRespostaLoveTrackXmlHtttpRequestSend(xhr);
                   //processarRespostaLoveTrack(this); //seria equivalent, faltaria gestionar errors
                 }
             }
-            var data = JSON.stringify(dades);
-            xhr.send(data);
-            /*
-                $.ajax({
-                  type: "POST", //both are same, in new version of jQuery type renamed to method
-                  url: last_url,
-                  data: JSON.stringify(dades),
-                  dataType: 'xml', //datatype especifica el tipus de dada que s'espera rebre del servidor
-                  success: function(res){
-                      processarRespostaAddTag(res);
-                  },
-                  error : function(){
-                      console.log("Error en addTag to track" + dades.track + "de l'artista" + dades.artist);
-                      document.getElementById("demo2").innerHTML = "<h2>Failure</h2>";
-                  }
-                 });
-    */
-                 function processarRespostaLoveTrack(xml) {
-                   var i;
-                   var xmlDoc = xml.responseXML;
-                   x = xmlDoc.getElementsByTagName('lfm');
-                   txt = x.getAttribute("status");
+
+            var urlquery ="http://ws.audioscrobbler.com/2.0/?method=track.Love"
+                          + "&artist=" + dadestl.artist
+                          + "&track=" + dadestl.track
+                          + "&api_key=" + dadestl.api_key
+                          + "&token=" + dadestl.token
+                          + "&sk=" + dadestl.sk
+                          + "&api_sig=" + dadestl.api_sig;
+            xhr.open('POST', urlquery, true);
+    				xhr.overrideMimeType('text/xml'); // Crec que sense aquesta linea funcionaria igual
+            //xhr.responseType = 'document';
+    				xhr.send(null);
+
+
+                 function processarRespostaLoveTrackXmlHtttpRequestSend(xml) {
+
+                   var xmlDoc = xml.responseXML.documentElement; //Element root of the xml document
+                  // var x = xmlDoc.getElementsByTagName("lfm"); //If there were some childs ( ex; books in a bookstore)
+                   var txt = xmlDoc.getAttribute("status");
                    if( txt == "ok")
                    {
-                     document.getElementById("demo2").innerHTML = "<h2>Added Tag Correct</h2>";
+                     document.getElementById("demo2").innerHTML = "<h2>Added Love Correct to track</h2>";
                    }
                    else document.getElementById("demo2").innerHTML = "<h2>Failure</h2>";
                  }
             }
         }
 
+        function trackLoveXMlHttpRequest()
+        {
+          if (sessionStorage.getItem("mySessionKey") == null)
+          {
+            console.log("Error no estas authenticat");
+          }
+          else {
+            //Estas loguejat i autenticat de forma correcta--
+              //O be aixi i despres utilitzem una funcio per convertir-lo en string ( convertirenParametresDades del ioc)
+
+
+
+                var dadestl = {
+                  method: 'track.Love',
+                  artist : Utf8.encode('Muse'),
+                  track : Utf8.encode('Take a Bow'),
+                  api_key : myAPI_key,
+                  token : captured,
+                  sk : sessionStorage.getItem("mySessionKey")
+                  };
+
+                var last_url="http://ws.audioscrobbler.com/2.0/";
+               var xhr = new XMLHttpRequest();
+
+                xhr.open('POST', last_url, true);
+                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                      processarRespostaLoveTrackXmlHtttpRequest(xhr);
+                      //processarRespostaLoveTrack(this); //seria equivalent, faltaria gestionar errors
+                    }
+                }
+
+                var myapisiglove = calculate_apisig(dadestl);
+                console.log("La apiSig de Track love es: " + myapisiglove['api_sig']);
+                //delete dadestl["token"];
+                dadestl['api_sig']= myapisiglove['api_sig'];
+                var data = JSON.stringify(dadestl);
+
+                xhr.send(data);
+
+                     function processarRespostaLoveTrackXmlHtttpRequest(xml) {
+                       var i;
+                       var xmlDoc = xml.responseXML;
+                       x = xmlDoc.getElementsByTagName("lfm");
+                       txt = x.getAttribute("status");
+                       if( txt == "ok")
+                       {
+                         document.getElementById("demo2").innerHTML = "<h2>Added Love Correct to track</h2>";
+                       }
+                       else document.getElementById("demo2").innerHTML = "<h2>Failure</h2>";
+                     }
+                }
+            }
+
+        function trackLoveJquery()
+        {
+          if (sessionStorage.getItem("mySessionKey") == null)
+          {
+            console.log("Error no estas authenticat");
+          }
+          else {
+            //Estas loguejat i autenticat de forma correcta--
+              //O be aixi i despres utilitzem una funcio per convertir-lo en string ( convertirenParametresDades del ioc)
+              var last_url="http://ws.audioscrobbler.com/2.0/";
+
+                var dadestl = {
+                  method: 'track.Love',
+                  artist : Utf8.encode('Muse'),
+                  track : Utf8.encode('Take a Bow'),
+                  api_key : myAPI_key,
+                  token : captured,
+                  sk : sessionStorage.getItem("mySessionKey")
+                  };
+
+                var myapisiglove = calculate_apisig(dadestl);
+                console.log("La apiSig de Track love es: " + myapisiglove['api_sig']);
+                //delete dadestl["token"];
+                dadestl['api_sig']= myapisiglove['api_sig'];
+
+                    $.ajax({
+                      type: "POST", //both are same, in new version of jQuery type renamed to method
+                      url: last_url,
+                      data: dadestl,
+                      dataType: "xml", //datatype especifica el tipus de dada que s'espera rebre del servidor
+                      success: function(res){
+                          processarRespostaLoveTrackJquery(res);
+                      },
+                      error : function(xhr, ajaxOptions, thrownError){
+                          console.log("Error en Love Track to track" + dades.track + "de l'artista" + dades.artist);
+                          document.getElementById("demo2").innerHTML = "<h2>Failure</h2>";
+                      }
+                     });
+
+                     function processarRespostaLoveTrackJquery(xml) {
+                       txt = $(xml).find('lfm').attr('status');
+                       if( txt == "ok")
+                       {
+                         document.getElementById("demo2").innerHTML = "<h2>Added Track Love Correct</h2>";
+                       }
+                       else document.getElementById("demo2").innerHTML = "<h2>Failure Track Love</h2>";
+                }
+            }
+}
 /*
 Trying to find user default.it doesnt work
 */
@@ -1050,7 +1200,7 @@ function loadDefaultUserInfoXMLDoc() {
       myFunction(this);
     }
   };
-  xhttp.open("GET", "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=supermariano1&api_key=d30c30f2e4eddeb7eac9ca3f90272243", true);
+  xhttp.open("GET", "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&api_key=d30c30f2e4eddeb7eac9ca3f90272243", true);
   xhttp.send();
 }
 
