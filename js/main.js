@@ -417,357 +417,12 @@ function loadChartTopArtistsJSONDoc()
 					  }
 }
 
-
-/*
-The only illegal characters are &, < and > (as well as " or ' in attributes).
-They're escaped using XML entities, in this case you want &amp; for &.
-Metode: https://www.last.fm/api/show/artist.search
-Objective: Search for an artist by name. Returns artist matches sorted by relevance.
-Params
-limit (Optional) : The number of results to fetch per page. Defaults to 30.
-page (Optional) : The page number to fetch. Defaults to first page.
-artist (Required) : The artist name
-api_key (Required) : A Last.fm API key.
-Exemple use params optional: http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=b6720a4ef50c0a1f63419e334fbf9c74&format=json&limit=10&page=2
-Agafa dos pagines de 10 entrades cadascuna, un total de 20 ( 0...19)
-Exmaple response in XML:
-<results for="cher" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">
-  <opensearch:Query role="request" searchTerms="cher" startPage="1"/>
-  <opensearch:totalResults>386</opensearch:totalResults>
-  <opensearch:startIndex>0</opensearch:startIndex>
-  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
-  <artistmatches>
-    <artist>
-      <name>Cher</name>
-      <mbid>bfcc6d75-a6a5-4bc6-8282-47aec8531818</mbid>
-      <url>www.last.fm/music/Cher</url>
-      <image_small>http://userserve-ak.last.fm/serve/50/342437.jpg</image_small>
-      <image>http://userserve-ak.last.fm/serve/160/342437.jpg</image>
-      <streamable>1</streamable>
-    </artist>
-	...
-  </artistmatches>
-</results>
-NOTE SEEMS ONLY WORKS IN JSON FORMAT:
-http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=b6720a4ef50c0a1f63419e334fbf9c74&format=json
-THIS DOESNT WORK...http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=b6720a4ef50c0a1f63419e334fbf9c74
-{
-  "results": {
-    "opensearch:Query": {
-      "#text": "",
-      "role": "request",
-      "searchTerms": "sanz",
-      "startPage": "1"
-    },
-    "opensearch:totalResults": "8171",
-    "opensearch:startIndex": "0",
-    "opensearch:itemsPerPage": "10",
-    "artistmatches": {
-      "artist": [
-        {
-          "name": "Alejandro Sanz",
-          "listeners": "344758",
-          "mbid": "9bacf78f-9132-43da-8873-8a9eb49da0e9",
-          "url": "https://www.last.fm/music/Alejandro+Sanz",
-          "streamable": "0",
-          "image": [
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/34s/e5dc14a74e694b60ba6c32f748331749.png",
-              "size": "small"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/64s/e5dc14a74e694b60ba6c32f748331749.png",
-              "size": "medium"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/174s/e5dc14a74e694b60ba6c32f748331749.png",
-              "size": "large"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/e5dc14a74e694b60ba6c32f748331749.png",
-              "size": "extralarge"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/e5dc14a74e694b60ba6c32f748331749.png",
-              "size": "mega"
-            }
-          ]
-        },
-        {
-          "name": "Gaspar Sanz",
-          "listeners": "7735",
-          "mbid": "e1975032-7d64-417c-80c8-c9b7e95c3e07",
-          "url": "https://www.last.fm/music/Gaspar+Sanz",
-          "streamable": "0",
-          "image": [
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/34s/5d8e2effdbe94fb0a8e7db92ff305989.png",
-              "size": "small"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/64s/5d8e2effdbe94fb0a8e7db92ff305989.png",
-              "size": "medium"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/174s/5d8e2effdbe94fb0a8e7db92ff305989.png",
-              "size": "large"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/5d8e2effdbe94fb0a8e7db92ff305989.png",
-              "size": "extralarge"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/5d8e2effdbe94fb0a8e7db92ff305989.png",
-              "size": "mega"
-            }
-          ]
-        },
-        {
-          "name": "Stanza",
-          "listeners": "9265",
-          "mbid": "df9e5910-f834-403f-b4d8-31dff2954378",
-          "url": "https://www.last.fm/music/Stanza",
-          "streamable": "0",
-          "image": [
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/34s/5785557488a84487b6ff221902480259.png",
-              "size": "small"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/64s/5785557488a84487b6ff221902480259.png",
-              "size": "medium"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/174s/5785557488a84487b6ff221902480259.png",
-              "size": "large"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/5785557488a84487b6ff221902480259.png",
-              "size": "extralarge"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/5785557488a84487b6ff221902480259.png",
-              "size": "mega"
-            }
-          ]
-        },
-        {
-          "name": "sanzu",
-          "listeners": "3483",
-          "mbid": "",
-          "url": "https://www.last.fm/music/sanzu",
-          "streamable": "0",
-          "image": [
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/34s/5df53391adf6703037ad3f9f2cd13f49.png",
-              "size": "small"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/64s/5df53391adf6703037ad3f9f2cd13f49.png",
-              "size": "medium"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/174s/5df53391adf6703037ad3f9f2cd13f49.png",
-              "size": "large"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/5df53391adf6703037ad3f9f2cd13f49.png",
-              "size": "extralarge"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/5df53391adf6703037ad3f9f2cd13f49.png",
-              "size": "mega"
-            }
-          ]
-        },
-        {
-          "name": "alejandro sanz & alicia keys",
-          "listeners": "4463",
-          "mbid": "9bacf78f-9132-43da-8873-8a9eb49da0e9",
-          "url": "https://www.last.fm/music/alejandro+sanz+&+alicia+keys",
-          "streamable": "0",
-          "image": [
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/34s/d9f59281001e4535896ffbf2947138c5.png",
-              "size": "small"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/64s/d9f59281001e4535896ffbf2947138c5.png",
-              "size": "medium"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/174s/d9f59281001e4535896ffbf2947138c5.png",
-              "size": "large"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/d9f59281001e4535896ffbf2947138c5.png",
-              "size": "extralarge"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/d9f59281001e4535896ffbf2947138c5.png",
-              "size": "mega"
-            }
-          ]
-        },
-        {
-          "name": "Shakira & Alejandro Sanz",
-          "listeners": "9188",
-          "mbid": "bf24ca37-25f4-4e34-9aec-460b94364cfc",
-          "url": "https://www.last.fm/music/Shakira+&+Alejandro+Sanz",
-          "streamable": "0",
-          "image": [
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/34s/bb4ddc43141c4702a1db1c9cf5174e27.png",
-              "size": "small"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/64s/bb4ddc43141c4702a1db1c9cf5174e27.png",
-              "size": "medium"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/174s/bb4ddc43141c4702a1db1c9cf5174e27.png",
-              "size": "large"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/bb4ddc43141c4702a1db1c9cf5174e27.png",
-              "size": "extralarge"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/bb4ddc43141c4702a1db1c9cf5174e27.png",
-              "size": "mega"
-            }
-          ]
-        },
-        {
-          "name": "Noa Sainz",
-          "listeners": "2357",
-          "mbid": "",
-          "url": "https://www.last.fm/music/Noa+Sainz",
-          "streamable": "0",
-          "image": [
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/34s/34394657023298346bff5cc081a1cb13.png",
-              "size": "small"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/64s/34394657023298346bff5cc081a1cb13.png",
-              "size": "medium"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/174s/34394657023298346bff5cc081a1cb13.png",
-              "size": "large"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/34394657023298346bff5cc081a1cb13.png",
-              "size": "extralarge"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/34394657023298346bff5cc081a1cb13.png",
-              "size": "mega"
-            }
-          ]
-        },
-        {
-          "name": "Alejandro Sanz feat. Alicia Keys",
-          "listeners": "2499",
-          "mbid": "9bacf78f-9132-43da-8873-8a9eb49da0e9",
-          "url": "https://www.last.fm/music/Alejandro+Sanz+feat.+Alicia+Keys",
-          "streamable": "0",
-          "image": [
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/34s/ddfef7a7b67c4b4cb189cb145d2ca604.png",
-              "size": "small"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/64s/ddfef7a7b67c4b4cb189cb145d2ca604.png",
-              "size": "medium"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/174s/ddfef7a7b67c4b4cb189cb145d2ca604.png",
-              "size": "large"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/ddfef7a7b67c4b4cb189cb145d2ca604.png",
-              "size": "extralarge"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/ddfef7a7b67c4b4cb189cb145d2ca604.png",
-              "size": "mega"
-            }
-          ]
-        },
-        {
-          "name": "Seanzy",
-          "listeners": "1996",
-          "mbid": "",
-          "url": "https://www.last.fm/music/Seanzy",
-          "streamable": "0",
-          "image": [
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/34s/d31cc56b100c950dc5dfbe629efdd45d.png",
-              "size": "small"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/64s/d31cc56b100c950dc5dfbe629efdd45d.png",
-              "size": "medium"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/174s/d31cc56b100c950dc5dfbe629efdd45d.png",
-              "size": "large"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/d31cc56b100c950dc5dfbe629efdd45d.png",
-              "size": "extralarge"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/d31cc56b100c950dc5dfbe629efdd45d.png",
-              "size": "mega"
-            }
-          ]
-        },
-        {
-          "name": "Mando Saenz",
-          "listeners": "1959",
-          "mbid": "832cb293-2005-4f5c-9b91-2093fd3476ff",
-          "url": "https://www.last.fm/music/Mando+Saenz",
-          "streamable": "0",
-          "image": [
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/34s/17d48a0bbf694104b81597457acff99a.png",
-              "size": "small"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/64s/17d48a0bbf694104b81597457acff99a.png",
-              "size": "medium"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/174s/17d48a0bbf694104b81597457acff99a.png",
-              "size": "large"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/17d48a0bbf694104b81597457acff99a.png",
-              "size": "extralarge"
-            },
-            {
-              "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/17d48a0bbf694104b81597457acff99a.png",
-              "size": "mega"
-            }
-          ]
-        }
-      ]
-    },
-    "@attr": {
-      "for": "sanz"
-    }
-  }
-}
-*/
 function loadSearchArtistJSONDoc() {
   var stringquery="eminem";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      processarResposta(this.responseText);
+      processarResposta1(this.responseText);
     }
   };
   //Has to change sanz to whatever, and limit opcional, also the page to get ( dont necessary)...
@@ -777,12 +432,12 @@ function loadSearchArtistJSONDoc() {
   xhttp.send();
 }
 
-function processarResposta(dades) {
+function processarResposta1(dades) {
   var	myObj = JSON.parse(dades);
   var llista = document.createElement('ul');
   var txt,x="";
-  txt +="<h1> Search result for artist:" + myObj.results["@attr"].for; // Com no pot ser fico myObj.results.@attr.for
-  txt +="<h1> Search result for artist</h1>";
+  txt +="<h1> Buscar resultat artistes:" + myObj.results["@attr"].for; // Com no pot ser fico myObj.results.@attr.for
+  txt +="<h1> Buscar resultat per l'artista </h1>";
   txt += "<table border='1'>";
   txt += "<tr><th>Nom</th><th>URL</th><th>Imatge</th></tr>";
   console.log("Cantidad de artistas:" + myObj.results.artistmatches.artist.length);
@@ -790,6 +445,41 @@ function processarResposta(dades) {
       txt += "<tr><td>" + myObj.results.artistmatches.artist[i].name + "</td><td>"+ myObj.results.artistmatches.artist[i].url + "</td><td><img src="+ myObj.results.artistmatches.artist[i].image[2]["#text"] +"/></td></tr>";
       }
 /*
+  for (x in myObj) {
+      txt += "<tr><td>" + myObj[x].artists.artist.name + "</td></tr>";
+    }*/
+  txt += "</table>";
+  document.getElementById("artist").innerHTML = txt;
+}
+
+
+
+
+function loadSearchAlbumJSONDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      processarResposta(this.responseText);
+    }
+  };
+  //Has to change sanz to whatever, and limit opcional, also the page to get ( dont necessary)...
+  var url =  "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=d30c30f2e4eddeb7eac9ca3f90272243&artist=Cher&album=Believe&format=json";
+  xhttp.open("GET", url, true);
+  xhttp.overrideMimeType('text/plain');
+  xhttp.send();
+}
+
+function processarResposta(dades) {
+  var	myObj = JSON.parse(dades);
+  var llista = document.createElement('ul');
+  var txt,x=""; // Com no pot ser fico myObj.results.@attr.for
+  txt +="<h1> Resultat per album</h1>";
+  txt += "<table border='1'>";
+  txt += "<tr><th>Nom</th><th>Artista</th></tr>";
+  //for (var i=0; i< 10;i++) {
+    txt += "<tr><td>" + myObj.album.name + "</td><td>"+ myObj.album.artist + "</td></tr>";
+      //}
+      /*
   for (x in myObj) {
       txt += "<tr><td>" + myObj[x].artists.artist.name + "</td></tr>";
     }*/
