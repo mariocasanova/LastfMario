@@ -185,7 +185,7 @@ $.ajax({
     dataType : 'json',
     success : function(data) {
             $('#success #artistName').html(data.user.name);
-           $('#success #artistImage').html('<img src="' + data.user.image['#text'] + '" />');
+           $('#success #artistImage').html('<img src="' + data.user.image[1]['#text'] + '" />');
            $('#success #artistBio').html(data.user.playcount);
        },
     error : function(code, message){
@@ -221,10 +221,8 @@ function loadUserInfoXMLDoc() {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          //Si hem tingut exit..
           processarResposta(this);
         }
-        //Falta processar error
       };
       xhttp.open("GET", "http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=supermariano1&api_key=d30c30f2e4eddeb7eac9ca3f90272243", true);
       xhttp.send();
