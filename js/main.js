@@ -460,6 +460,8 @@ function loadSearchTrackJSONDoc()
 }
 
 
+
+
 	function mostrarProgres(event) {
 		  if (event.lengthComputable) {
 		    var progres = 100 * event.loaded / event.total;
