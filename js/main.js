@@ -392,6 +392,7 @@ function loadChartTopArtistsJSONDoc()
 				  var	myObj = JSON.parse(dades);
           var llista = document.createElement('ul');
           var txt,x="";
+          txt +="<h4> Top cançons <small>Lastfm</small></h4>";
           txt += "<table border='1'>";
           txt += "<tr><th>Nom</th><th>URL</th><th>Imatge</th></tr>";
           console.log("Cantidad de artistas:" + myObj.artists.artist.length);
@@ -406,15 +407,66 @@ function loadChartTopArtistsJSONDoc()
           document.getElementById("artist").innerHTML = txt;
         }
 
+}
+
+function loadSearchTrackJSONDoc()
+{
+  if (window.XMLHttpRequest) {
+					// Mozilla, Safari, IE7+
+					httpRequest = new XMLHttpRequest();
+					console.log("Creat l'objecte a partir de XMLHttpRequest.");
+				}
+				else if (window.ActiveXObject) {
+					// IE 6 i anteriors
+					httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+					console.log("Creat l'objecte a partir de ActiveXObject.");
+				}
+				else {
+					console.error("Error: Aquest navegador no suporta AJAX.");
 				}
 
-				function mostrarProgres(event) {
-					  if (event.lengthComputable) {
-					    var progres = 100 * event.loaded / event.total;
-					    console.log("Completat: " + progres + "%");
-					  } else {
-					    console.log("No es pot calcular el progrés");
-					  }
+			//	httpRequest.onload = processarResposta;
+				httpRequest.onprogress = mostrarProgres;
+        var urlquery ="http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=d30c30f2e4eddeb7eac9ca3f90272243&artist=cher&track=believe&format=json";
+        httpRequest.onreadystatechange = processarCanviEstat;
+
+        httpRequest.open('GET', urlquery, true);
+				httpRequest.overrideMimeType('text/plain');
+				httpRequest.send(null);
+
+        function processarCanviEstat() {
+          if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+            console.log("Exit transmissio.");
+            processarResposta(httpRequest.responseText);
+          }
+        }
+				function processarResposta(dades) {
+				  var	myObj = JSON.parse(dades);
+          var llista = document.createElement('ul');
+          var txt,x="";
+          txt +="<h4> Informació cançó: <small>"+ myObj.track.name +"</small>&nbsp;<img src="+ myObj.track.album.image[0]["#text"] +"/></h4>";
+          txt += "<table border='1'>";
+          txt += "<tr><th>Nom</th><th>Descripció</th><th>Publicat</th></tr>";
+          txt += "<tr><td>" + myObj.track.name + "</td><td>"+ myObj.track.wiki.summary + "</td><td>" + myObj.track.wiki.published +"</td></tr>";
+
+/*
+          for (x in myObj) {
+              txt += "<tr><td>" + myObj[x].artists.artist.name + "</td></tr>";
+            }*/
+          txt += "</table>";
+          document.getElementById("artist").innerHTML = txt;
+        }
+
+}
+
+
+	function mostrarProgres(event) {
+		  if (event.lengthComputable) {
+		    var progres = 100 * event.loaded / event.total;
+		    console.log("Completat: " + progres + "%");
+		  } else {
+		    console.log("No es pot calcular el progrés");
+		  }
 }
 
 function loadSearchArtistJSONDoc() {
@@ -436,12 +488,11 @@ function processarResposta1(dades) {
   var	myObj = JSON.parse(dades);
   var llista = document.createElement('ul');
   var txt,x="";
-  txt +="<h1> Buscar resultat artistes:" + myObj.results["@attr"].for; // Com no pot ser fico myObj.results.@attr.for
-  txt +="<h1> Buscar resultat per l'artista </h1>";
+  txt +="<h4> Buscar resultat artistes: <small>" + myObj.results["@attr"].for + "</small></h4>"; // Com no pot ser fico myObj.results.@attr.for
   txt += "<table border='1'>";
   txt += "<tr><th>Nom</th><th>URL</th><th>Imatge</th></tr>";
   console.log("Cantidad de artistas:" + myObj.results.artistmatches.artist.length);
-  for (var i=0; i< 10;i++) {
+  for (var i=0; i< 5;i++) {
       txt += "<tr><td>" + myObj.results.artistmatches.artist[i].name + "</td><td>"+ myObj.results.artistmatches.artist[i].url + "</td><td><img src="+ myObj.results.artistmatches.artist[i].image[2]["#text"] +"/></td></tr>";
       }
 /*
@@ -473,12 +524,13 @@ function processarResposta(dades) {
   var	myObj = JSON.parse(dades);
   var llista = document.createElement('ul');
   var txt,x=""; // Com no pot ser fico myObj.results.@attr.for
-  txt +="<h1> Resultat per album</h1>";
+  txt +="<h4> Artista de l'album: <small>" + myObj.album.artist +"</small>&nbsp;<img src="+ myObj.album.image[0]["#text"] +"/></h4>";
   txt += "<table border='1'>";
-  txt += "<tr><th>Nom</th><th>Artista</th></tr>";
-  //for (var i=0; i< 10;i++) {
-    txt += "<tr><td>" + myObj.album.name + "</td><td>"+ myObj.album.artist + "</td></tr>";
-      //}
+  txt += "<tr><th>Nom cançó</th><th>Url</th><th>Artista</th></tr>";
+  for (var i=0; i< 5;i++) {
+    txt += "<tr><td>" + myObj.album.tracks.track[i].name + "</td><td>" + myObj.album.tracks.track[i].url + "</td><td>"+ myObj.album.tracks.track[i].duration +"</td></tr>";
+
+    }
       /*
   for (x in myObj) {
       txt += "<tr><td>" + myObj[x].artists.artist.name + "</td></tr>";
