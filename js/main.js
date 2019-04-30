@@ -459,6 +459,57 @@ function loadSearchTrackJSONDoc()
 
 }
 
+function loadSearchTrackParamJSONDoc()
+{
+  var canço = document.formu.canço.value;
+  var artista = document.formu.artista.value;
+  if (window.XMLHttpRequest) {
+					// Mozilla, Safari, IE7+
+					httpRequest = new XMLHttpRequest();
+					console.log("Creat l'objecte a partir de XMLHttpRequest.");
+				}
+				else if (window.ActiveXObject) {
+					// IE 6 i anteriors
+					httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+					console.log("Creat l'objecte a partir de ActiveXObject.");
+				}
+				else {
+					console.error("Error: Aquest navegador no suporta AJAX.");
+				}
+
+			//	httpRequest.onload = processarResposta;
+				httpRequest.onprogress = mostrarProgres;
+        var urlquery ="http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=d30c30f2e4eddeb7eac9ca3f90272243&artist="+artista+"&track="+canço+"&format=json";
+        httpRequest.onreadystatechange = processarCanviEstat;
+
+        httpRequest.open('GET', urlquery, true);
+				httpRequest.overrideMimeType('text/plain');
+				httpRequest.send(null);
+
+        function processarCanviEstat() {
+          if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+            console.log("Exit transmissio.");
+            processarResposta(httpRequest.responseText);
+          }
+        }
+				function processarResposta(dades) {
+				  var	myObj = JSON.parse(dades);
+          var llista = document.createElement('ul');
+          var txt,x="";
+          txt +="<h4> Informació cançó: <small>"+ myObj.track.name +"</small>&nbsp;<img src="+ myObj.track.album.image[0]["#text"] +"/></h4>";
+          txt += "<table border='1'>";
+          txt += "<tr><th>Nom</th><th>Descripció</th><th>Publicat</th></tr>";
+          txt += "<tr><td>" + myObj.track.name + "</td><td>"+ myObj.track.wiki.summary + "</td><td>" + myObj.track.wiki.published +"</td></tr>";
+
+/*
+          for (x in myObj) {
+              txt += "<tr><td>" + myObj[x].artists.artist.name + "</td></tr>";
+            }*/
+          txt += "</table>";
+          document.getElementById("artist").innerHTML = txt;
+        }
+
+}
 
 
 
