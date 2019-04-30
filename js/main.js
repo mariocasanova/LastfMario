@@ -458,11 +458,12 @@ function loadSearchTrackJSONDoc()
         }
 
 }
-
+/*
 function loadSearchTrackParamJSONDoc()
 {
   var canço = document.formu.canço.value;
   var artista = document.formu.artista.value;
+    
   if (window.XMLHttpRequest) {
 					// Mozilla, Safari, IE7+
 					httpRequest = new XMLHttpRequest();
@@ -501,17 +502,11 @@ function loadSearchTrackParamJSONDoc()
           txt += "<tr><th>Nom</th><th>Descripció</th><th>Publicat</th></tr>";
           txt += "<tr><td>" + myObj.track.name + "</td><td>"+ myObj.track.wiki.summary + "</td><td>" + myObj.track.wiki.published +"</td></tr>";
 
-/*
-          for (x in myObj) {
-              txt += "<tr><td>" + myObj[x].artists.artist.name + "</td></tr>";
-            }*/
           txt += "</table>";
           document.getElementById("artist").innerHTML = txt;
         }
 
 }
-
-
 
 	function mostrarProgres(event) {
 		  if (event.lengthComputable) {
@@ -521,7 +516,7 @@ function loadSearchTrackParamJSONDoc()
 		    console.log("No es pot calcular el progrés");
 		  }
 }
-
+*/
 function loadSearchArtistJSONDoc() {
   var stringquery="eminem";
   var xhttp = new XMLHttpRequest();
