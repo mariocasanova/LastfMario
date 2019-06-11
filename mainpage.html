@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Menu principal Last FM</title>
+		<meta charset="utf-8">
+		 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- <script type="text/javascript" src="./js/constants.js"></script>-->
+			<script type="text/javascript" src="./js/md5.min.js"></script>
+			<script type="text/javascript" src="./js/main.js"></script>
+            <script type="text/javascript" src="./js/autenticar.js"></script>
+			<link href="boots/css/bootstrap.min.css" rel="stylesheet" media="screen">
+			<link href="estils.css" rel="stylesheet">
+		</head>
+	<body class="body2">
+<div class="espai">
+		<div id="error"></div>
+		<h1>Menú <small>d'accions</small></h1>
+		<button type="button" class="btn1" onclick="calcularApiStack()">Informació d'usuari</button>
+        <table class="table table-bordered table-striped table-hover" id="dadesUsuari"></table>
+
+		<h3>Informació <small>artista</small></h3>
+		<button type="button" class="btn3" onclick="loadSearchArtistJSONDoc()">Rebre llista d'artistes <input type="text" class="form-control" placeholder="Insereix una quantitat" id="quantiat"></button>
+		<button type="button" class="btn4" onclick="loadChartTopArtistsJSONDoc()">Top cançons <input type="text" class="form-control" placeholder="Insereix una quantitat" id="quantiat2"></button>
+
+        <h5>Vols buscar un altre artista? Endavant!</h5>
+        <div class="input-group">
+            <span class="input-group-addon">Cerca un artista: </span>
+            <input type="text" class="form-control" placeholder="Insereix un artista" id="nomArtista">
+            <span class="input-group-btn">
+               <button class="btn btn-default" type="button" onclick="loadSearchArtistQueryJSONDoc()">Cercar <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </span>
+        </div>
+
+        <h5>Vols buscar algun album? Endavant!</h5>
+        <div class="input-group">
+						<span class="input-group-addon">Artista: </span>
+						<input type="text" class="form-control" placeholder="Insereix un artista" id="nomArtist">
+            <span class="input-group-addon">Album: </span>
+            <input type="text" class="form-control" placeholder="Insereix un album" id="nomAlbum">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" onclick="loadSearchAlbumQueryJSONDoc()">Cercar <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </span>
+        </div>
+
+
+		<!--<h3>Informació <small>api</small></h3>
+		<button type="button" class="btn5" onclick="calculateApiSignature()">Calcular signatura d'API</button>
+		<button type="button" class="btn6" onclick="calculateApiSignatureStack()">Calcular signatura d'API stack</button>-->
+	<!--	<div id="success">
+		 <h3>Token:</h1> <small><div id="token"></div></small>
+		 <h3>Api Sig:</h1> <small><div id="apisig"></div></small>
+		 <h3>Api Key:</h1> <small><div id="apikey"></div></small>
+		</div>
+		<div id="error"></div> -->
+	<!--	<button type="button" class="btn7" onclick="addTrackTag()">Add tags to track</button>
+		<button type="button" class="btn8" onclick="trackLove()">Love track</button> -->
+
+		<h3>Informació <small>àlbum</small></h3>
+		<button type="button" class="btn2" onclick="loadSearchAlbumJSONDoc()">Informació àlbum per defecte</button>
+		<button type="button" class="btn1" onclick="loadSearchTrackJSONDoc()">Informació cançó per defecte</button>
+
+       <!-- <form action="" method="post" id="formu" name="formu"
+              onsubmit="return loadSearchTrackParamJSONDoc()">
+            <label for="artista">Nom artista:</label>
+                <input type="text" name="artista" id="artista"/>
+            <label for="canço">Nom cançó:</label>
+                <input type="text" name="canço" id="canço"/>
+            <input id="button" type="submit" name="button" value="Enviar" class="btn4" onsubmit="return loadSearchTrackParamJSONDoc()"/>
+        </form> -->
+	<!--	<button type="button" class="btn4" onclick="">Informació cançó</button> -->
+		<table id="demo"></table>
+
+		<table id="demo2"></table>
+
+		<p id="artist"></p>
+</div>
+	</body>
+</html>
